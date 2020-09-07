@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  db:
+    image: postgres:12
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_USER=bh
+      - POSTGRES_DB=decerto
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:
