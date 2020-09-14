@@ -1,19 +1,33 @@
 package pl.beatahumeniuk.decertonumberservicecore.model;
 
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import pl.beatahumeniuk.decertonumberservicecore.config.NumbersProperties;
+import pl.beatahumeniuk.decertonumberservicecore.entity.RandomNumberDbEntity;
+import pl.beatahumeniuk.decertonumberservicecore.repository.RandomNumberDBRepository;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.Random;
 
-@Entity
-@Data
-public class RandomNumberDB {
+@Component
+@RequiredArgsConstructor
+public class RandomNumberDB extends RandomNumber {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
-    private BigDecimal value;
+    private final RandomNumberDBRepository randomNumberDBRepository;
+    private final NumbersProperties numbersProperties;
+
+    public BigDecimal getRandomValue() {
+        return getFromDB();
+    }
+
+    private BigDecimal getFromDB() {
+        Optional<RandomNumberDbEntity> randomNumberDBOptional = randomNumberDBRepository.findById(getRandomIndex());
+        return randomNumberDBOptional.map(RandomNumberDbEntity::getValue).orElse(null);
+    }
+
+    private Long getRandomIndex() {
+        return (long) new Random().nextInt(numbersProperties.getDbItemsNumber());
+    }
+
 }

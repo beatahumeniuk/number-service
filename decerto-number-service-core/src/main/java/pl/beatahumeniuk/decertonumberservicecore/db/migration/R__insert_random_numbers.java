@@ -28,11 +28,12 @@ private final NumbersProperties numbersProperties;
     }
 
     private String prepareQuery(List<BigDecimal> items) {
-        StringBuilder query = new StringBuilder("INSERT INTO decerto.random_numberdb VALUES ");
+        StringBuilder query = new StringBuilder("INSERT INTO decerto.random_number_db_entity VALUES ");
         for (int i = 0; i < items.size(); i++) {
             query.append("(").append(i + 1).append(",").append(items.get(i)).append("),");
         }
         query.deleteCharAt(query.length()-1);
+        query.append("SELECT setval('decerto.hibernate_sequence', ").append(items.size()).append(", true)");
         return query.toString();
     }
 

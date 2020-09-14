@@ -1,18 +1,15 @@
 package pl.beatahumeniuk.decertonumberservicecore.model;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
-public class RandomNumberJava {
+@Component
+public class RandomNumberJava extends RandomNumber {
 
-    private final BigDecimal value;
-
-    public RandomNumberJava() {
-        this.value = new BigDecimal(BigInteger.valueOf(new Random().nextInt(1000001)), 2);
-    }
-
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getRandomValue() {
+        return new BigDecimal(BigInteger.valueOf(new Random().nextInt(1000001)), 2);
     }
 }
