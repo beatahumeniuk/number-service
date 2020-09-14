@@ -7,8 +7,9 @@ import java.math.BigInteger;
 import java.util.Random;
 
 @Component
-public class RandomNumberJava extends RandomNumber {
+public class RandomNumberJava implements RandomNumber {
 
+    @Override
     public BigDecimal getRandomValue() {
         return new BigDecimal(BigInteger.valueOf(new Random().nextInt(1000001)), 2);
     }

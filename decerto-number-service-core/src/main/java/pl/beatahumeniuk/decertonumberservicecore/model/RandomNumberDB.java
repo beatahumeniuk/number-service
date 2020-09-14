@@ -12,11 +12,12 @@ import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
-public class RandomNumberDB extends RandomNumber {
+public class RandomNumberDB implements RandomNumber {
 
     private final RandomNumberDBRepository randomNumberDBRepository;
     private final NumbersProperties numbersProperties;
 
+    @Override
     public BigDecimal getRandomValue() {
         return getFromDB();
     }
